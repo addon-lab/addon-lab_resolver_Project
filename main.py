@@ -18,40 +18,24 @@
 from plugins import evoloadio
 from plugins import gamovideo
 from plugins import videossh
+from plugins.resolver import Switcher
 
 if __name__ == '__main__':
-    # urlz='https://evoload.io/e/V4R2kW59HzGZln'
-    # req = evoloadio.get_playable_stream('https://evoload.io/e/V4R2kW59HzGZln')
-    # print('Embed url: %s - Streams url: %s,' % (urlz, req))
 
-    print('++++++++++++++++ test evoload.io ++++++++++++++++++++++++++++++++++++')
-
-    urls_test_evoload=['https://evoload.io/e/V4R2kW59HzGZln',
+    urls_test =['https://evoload.io/e/V4R2kW59HzGZln',
                'https://evoload.io/f/t7nV1zql2rwgr9',
-               'https://evoload.io/e/d1dabSVJKYMmWp'
+               'https://evoload.io/e/d1dabSVJKYMmWp',
+                'http://gamovideo.com/08qrylehmpta',
+                'http://gamovideo.com/avazv9iv7vu5',
+                'http://gamovideo.com/tpd2ioeyuh3m',
+                'https://videos.sh/embed-ybo6ow0j7lwt.html',
+                 'https://videos.sh/embed-ae2zr17mm65s.html',
+                'https:// xxxxxxx'
                 ]
-    for url in urls_test_evoload:
-        req=evoloadio.get_playable_stream(url)
-        print('Embed url: %s - Streams url: %s' %(url,req))
+    for url in urls_test:
+        resolved = Switcher(url).get_server()
+        print(resolved)
 
-    print('++++++++++++++++ test gamovideo.com ++++++++++++++++++++++++++++++++++++')
-
-    urls_test_gamovideo = ['http://gamovideo.com/08qrylehmpta',
-                           'http://gamovideo.com/avazv9iv7vu5',
-                           'http://gamovideo.com/tpd2ioeyuh3m']
-
-    for url in urls_test_gamovideo:
-        req = gamovideo.get_playable_stream(url)
-        print('Embed url: %s - Streams url: %s' % (url, req))
-
-    print('++++++++++++++++ test videos.sh ++++++++++++++++++++++++++++++++++++')
-
-    urls_test_videos_sh = ['https://videos.sh/embed-ybo6ow0j7lwt.html',
-                           'https://videos.sh/embed-ae2zr17mm65s.html'
-                           ]
-    for url in urls_test_videos_sh:
-        req = videossh.get_playable_stream(url)
-        print('Embed url: %s - Streams url: %s,' % (url, req))
 
 
 
