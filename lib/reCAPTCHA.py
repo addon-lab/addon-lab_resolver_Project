@@ -55,7 +55,7 @@ def get_token(site_key, co, sa, loc):
     # size=invisible&
     # cb=bz0ghw418wug
 
-    url2="https://www.google.com/recaptcha/api2/anchor?ar=1&k=" + site_key + "&co=" +co +"&hl=ro&v=" + v + "&size=invisible&cb=" + cb
+    url2="https://www.google.com/recaptcha/api2/anchor?ar=1&k=" + site_key + "&co=" +co +"&hl=es&v=" + v + "&size=invisible&cb=" + cb
 
     req = s.get(url2)
     data = req.text

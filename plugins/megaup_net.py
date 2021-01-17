@@ -1,7 +1,7 @@
 # coding=utf-8
 
 """
-    videossh : script that get stream url from videos.sh embed videos
+    Megaup_net.py : script that gets stream url from megaup.net embed videos
     Copyright (C) 2021 ADDON-LAB, KAR10S
 
     This program is free software: you can redistribute it and/or modify
@@ -20,8 +20,10 @@ import requests
 import re
 
 def get_playable_stream(url_):
+    import time
+    video_urls = ''
     url = validate(url_)
-    if url == '': return 'Wrong videos.sh embed video url'
+    if url == '': return 'Wrong megaup.net embed video url'
     default_headers = dict()
     default_headers[
         "User-Agent"] = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.75 Safari/537.36"
@@ -32,20 +34,33 @@ def get_playable_stream(url_):
     s = requests.session()
     req = s.get(url_, headers=default_headers)
     data=req.text
-    regex = r"(?:src|file)\s*:\s*\"([^\"]+)\""
+    regex = "download-timer.*?btn-default.*?href='(.*?)'"
     try:
-        result=re.findall(regex,data,re.MULTILINE)[0]
+        url=re.findall(regex,data,re.MULTILINE)[0]
     except:
-        result=''
-    return result
+        return ''
 
-#(https://videos.sh/embed-\w+.html)
+    if url:
+        regex_seconds = r"var\s*seconds\s*=\s*(\d*)"
+        try:
+            seconds = int(re.findall(regex_seconds, data, re.MULTILINE)[0])
+        except:
+            seconds = 6
+        time.sleep(seconds+1)
+        data_url = s.get(url,allow_redirects=False)
+        media_url = data_url.headers.get('location', '')
+        if media_url:
+            video_urls=media_url
+
+    return video_urls
+
 
 def validate(url):
     #https://videos.sh/embed-ybo6ow0j7lwt.html
-    regex = r"(https:\/\/videos\.sh\/embed-\w+.html)"
+    regex = r"(https*:\/\/megaup\.net\/.*?\/)"
     try:
         _url_=re.findall(regex,url,re.MULTILINE)[0]
     except:
         return ''
     return _url_
+

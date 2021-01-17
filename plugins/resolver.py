@@ -1,6 +1,6 @@
 import re
 
-from plugins import evoloadio, gamovideo, videossh
+from plugins import evoloadio, gamovideo, videossh, megaup_net, uqload
 
 
 class Switcher(object):
@@ -27,11 +27,19 @@ class Switcher(object):
     def videossh(self):
         result = videossh.get_playable_stream(self.url)
         return result
+    def megaup_net(self):
+        result = megaup_net.get_playable_stream(self.url)
+        return result
+    def uqload(self):
+        result = uqload.get_playable_stream(self.url)
+        return result
 
     def get_method(self,url):
-        patron_evoload = r"https*:\/\/(evoload\.io)\/(?:e|f)\/.*?$"  # dev evoload.io
+        patron_evoload = r"https*:\/\/(evoload\.io)\/(?:e|f|v)\/.*?$"  # dev evoload.io
         patron_gamovideo = r"(gamovideo\.com)\/(?:embed-|)[a-z0-9]+"  # dev gamovideo.com
         patron_videossh = r"https*:\/\/(videos\.sh)\/embed-\w+.html"  # dev videos.sh
+        patron_magaup_net = r"(https*:\/\/megaup\.net\/.*?\/)"
+        patron_uqload = r"(uqload\.com)/.*?\.html"                  # dev   uqload.com
 
         resultado = re.findall(patron_evoload, url)
         if len(resultado) > 0: return 'evoloadio'
@@ -41,5 +49,11 @@ class Switcher(object):
 
         resultado = re.findall(patron_videossh, url)
         if len(resultado) > 0: return 'videossh'
+
+        resultado = re.findall(patron_magaup_net, url)
+        if len(resultado) > 0: return 'megaup_net'
+
+        resultado = re.findall(patron_uqload, url)
+        if len(resultado) > 0: return 'uqload'
 
         return ''

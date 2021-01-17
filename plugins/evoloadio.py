@@ -71,10 +71,11 @@ def get_movie_code(url):
 
 def prepare_url(url):
     url=url.replace('/f/','/e/')
+    url = url.replace('/v/', '/e/')
     return url
 
 def validate_url(url):
-    regex = r"https*:\/\/evoload\.io\/(?:e|f)\/.*?$"
+    regex = r"https*:\/\/evoload\.io\/(?:e|f|v)\/.*?$"
     try:
         url=re.findall(regex,url)[0]
         url=prepare_url(url)
