@@ -8,7 +8,6 @@ class Switcher(object):
         self.url = url
 
     def get_server(self):
-
         """Dispatch method"""
         method_name = self.get_method(self.url)
         # Get the method from 'self'. Default to a lambda.
@@ -19,11 +18,9 @@ class Switcher(object):
     def evoloadio(self):
         result = evoloadio.get_playable_stream(self.url)
         return result
-
     def gamovideo(self):
         result = gamovideo.get_playable_stream(self.url)
         return result
-
     def videossh(self):
         result = videossh.get_playable_stream(self.url)
         return result
